@@ -154,7 +154,6 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 	}
 
 	if (stripos($field->attributes, 'data-form-icon') !== FALSE && ($cck->client == 'site' || $cck->client == 'search')) {
-//		jbdump($cck->client);
 		$attr	 = $field->attributes;
 		$attr	 = str_replace(' ', '~', $attr);
 		$attr	 = str_replace('"~', '" ', $attr);
@@ -163,6 +162,7 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 		$icon	 = '';
 		$flip	 = '';
 		$tag	 = "span";
+		$add	 = '';
 		$tooltip = '';
 		foreach ($attrs as $attrib) {
 			if (stripos($attrib, 'data-form-icon') !== FALSE) {
@@ -180,14 +180,16 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 				if ($vals[0] == 'data-form-icon-flip-a') {
 					$flip	 = " uk-form-icon-flip";
 					$tag	 = "a";
+					$add	 = " href='#'";
 					$icon	 = (strlen($icon) > 0) ? $icon : str_replace('"', '', $vals[1]);
 				} elseif ($vals[0] == 'data-form-icon-a') {
-					$tag	 = "a href='#'";
+					$tag	 = "a";
+					$add	 = " href='#'";
 					$icon	 = (strlen($icon) > 0) ? $icon : str_replace('"', '', $vals[1]);
 				}
 			}
 		}
-		$html = '<div id="' . $cck->id . '_' . $cck->mode_property . '_' . $field->name . '" class="uk-inline uk-width-1-1"><' . $tag .
+		$html = '<div id="' . $cck->id . '_' . $cck->mode_property . '_' . $field->name . '" class="uk-inline uk-width-1-1"><' . $tag . $add .
 				' class="uk-form-icon' . $flip . '" uk-icon="icon: ' . $icon . '"' . $tooltip . '></' . $tag .
 				'>' . $html . '</div>';
 	}
