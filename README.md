@@ -8,4 +8,4 @@ In common case icon located in right side. Flip icon will be on the left side. F
 ### Form link icon
 To make clickable icon use `data-form-icon-a` or `data-form-icon-flip-a` attribute.
 ### Form Icon with tooltip
-To add tooltip to your icon add `data-form-icon-tooltip="tooltip_text"`
+To add tooltip to your icon add `data-form-icon-tooltip="tooltip_text"` to your field
