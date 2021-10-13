@@ -167,25 +167,28 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 		foreach ($attrs as $attrib) {
 			if (stripos($attrib, 'data-form-icon') !== FALSE) {
 				$vals = explode('=', trim($attrib));
-				if ($vals[0] == 'data-form-icon') {
-					$icon = (strlen($icon) > 0) ? $icon : str_replace('"', '', $vals[1]);
-				}
-				if ($vals[0] == 'data-form-icon-tooltip') {
-					$tooltip = ' uk-tooltip title="' . str_replace('"', '', $vals[1]) . '"';
-				}
-				if ($vals[0] == 'data-form-icon-flip') {
-					$flip	 = " uk-form-icon-flip";
-					$icon	 = (strlen($icon) > 0) ? $icon : str_replace('"', '', $vals[1]);
-				}
-				if ($vals[0] == 'data-form-icon-flip-a') {
-					$flip	 = " uk-form-icon-flip";
-					$tag	 = "a";
-					$add	 = " href='#'";
-					$icon	 = (strlen($icon) > 0) ? $icon : str_replace('"', '', $vals[1]);
-				} elseif ($vals[0] == 'data-form-icon-a') {
-					$tag	 = "a";
-					$add	 = " href='#'";
-					$icon	 = (strlen($icon) > 0) ? $icon : str_replace('"', '', $vals[1]);
+				switch ($vals[0]){
+					case 'data-form-icon':
+						$icon = (strlen($icon) > 0) ? $icon : str_replace('"', '', $vals[1]);
+						break;
+					case 'data-form-icon-tooltip':
+						$tooltip = ' uk-tooltip title="' . str_replace('"', '', $vals[1]) . '"';
+						break;
+					case 'data-form-icon-flip':
+						$flip	 = " uk-form-icon-flip";
+						$icon	 = (strlen($icon) > 0) ? $icon : str_replace('"', '', $vals[1]);
+						break;
+					case 'data-form-icon-flip-a':
+						$flip	 = " uk-form-icon-flip";
+						$tag	 = "a";
+						$add	 = " href='#'";
+						$icon	 = (strlen($icon) > 0) ? $icon : str_replace('"', '', $vals[1]);
+						break;
+					case 'data-form-icon-a':
+						$tag	 = "a";
+						$add	 = " href='#'";
+						$icon	 = (strlen($icon) > 0) ? $icon : str_replace('"', '', $vals[1]);
+						break;
 				}
 			}
 		}
