@@ -7,3 +7,5 @@ To make form input with icons in common case use `data-form-icon` attribute (lik
 In common case icon located in right side. Flip icon will be on the left side. For this use `data-form-icon-flip` attribute.
 ### Form link icon
 To make clickable icon use `data-form-icon-a` or `data-form-icon-flip-a` attribute.
+### Form Icon with tooltip
+To add tooltip to your icon add `data-form-icon-tooltip="tooltip_text"`
