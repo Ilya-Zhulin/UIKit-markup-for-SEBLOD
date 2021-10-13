@@ -1,5 +1,6 @@
 # UIKit markup for SEBLOD
  Markup.php for SEBLOD 3.x templates with UIKit 3.x html
+ To use this override put file `markup.php` to fields folder and include `markup.min.js` to your page. 
 
 ## Form Icon
 To make form input with icons in common case use `data-form-icon` attribute (like `data-form-icon="user"`)
