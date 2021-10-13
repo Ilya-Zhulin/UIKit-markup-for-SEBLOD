@@ -158,7 +158,7 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 		$attr	 = str_replace(' ', '~', $attr);
 		$attr	 = str_replace('"~', '" ', $attr);
 		$attr	 = str_replace('~', ' ', $attr);
-		$attrs	 = explode(' ', trim($attr));
+		$attrs	 = explode('" ', trim($attr));
 		$icon	 = '';
 		$flip	 = '';
 		$tag	 = "span";
@@ -167,9 +167,9 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 		foreach ($attrs as $attrib) {
 			if (stripos($attrib, 'data-form-icon') !== FALSE) {
 				$vals = explode('=', trim($attrib));
-				switch ($vals[0]){
+				switch ($vals[0]) {
 					case 'data-form-icon':
-						$icon = (strlen($icon) > 0) ? $icon : str_replace('"', '', $vals[1]);
+						$icon	 = (strlen($icon) > 0) ? $icon : str_replace('"', '', $vals[1]);
 						break;
 					case 'data-form-icon-tooltip':
 						$tooltip = ' uk-tooltip title="' . str_replace('"', '', $vals[1]) . '"';
