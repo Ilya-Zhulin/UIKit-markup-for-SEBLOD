@@ -29,7 +29,7 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 	} elseif (stripos($cck->id_class, 'uk-form-horizontal') !== FALSE) {
 		$layout = '2';
 	}
-
+//	JBDump($cck);
 // Computation
 
 	if (isset($field->computation) && $field->computation) {
@@ -64,7 +64,7 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 
 
 //	Field Types
-
+//	JBDump($field->type, 0);
 	switch ($field->type) {
 		case 'checkbox':
 			$html	 = str_replace(array('class="checkbox ', 'class="checkbox"'), array('class="uk-checkbox uk-margin-small-right ', 'class="uk-checkbox uk-margin-small-right"'), $html);
@@ -82,10 +82,12 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 			break;
 
 		case 'textarea':
-			$html = preg_replace('/class=\"([^\-"]*)(uk-input)([^\"]*)\"/', 'class="$1uk-textarea $3"', $html);
+			$html = preg_replace('/class=\"([^\-"]*)(textarea)([^\"]*)\"/', 'class="$1uk-textarea $3"', $html);
 			break;
 
 		case 'group_x':
+			$doc	 = JFactory::getDocument();
+			$doc->addScript('/templates/' . $cck->template . '/fields/markup.min.js');
 			$html	 = preg_replace('/class=\\"([^\\"]*)(auto-expand)([^\\"]*)\\"/', 'uk-grid', $html);
 			$html	 = preg_replace('/class=\\"([^\\"]*)(cck_cgx_button)([^\\"]*)\\"/', 'class="$1 uk-float-right uk-iconnav uk-margin-bottom $3"', $html);
 			$html	 = preg_replace('/class=\\"([^\\"]*)(cck_cgx_form)([^\\"]*)\\"/', 'class="$1 uk-width-1-1 $3"', $html);
@@ -111,7 +113,36 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 			$html	 = preg_replace('/<div([^>]*)>(<li>)(.*?)(<\/li>)<\/div>/si', '<li$1>$3</li>', $html);
 
 			break;
-
+		case 'field_x':
+			$doc	 = JFactory::getDocument();
+			$doc->addScript('/templates/' . $cck->template . '/fields/markup.js');
+			$html	 = preg_replace('/class=\\"([^\\"]*)(collection-group-wrap)([^\\"]*)\\"/', 'uk-grid class="$1 $2 $3"', $html);
+			$html	 = preg_replace('/class=\\"([^\\"]*)(collection-group-form)([^\\"]*)\\"/', 'class="$1 uk-width-expand $3"', $html);
+			// FieldX buttons
+			$html	 = preg_replace('/(<(div)([^>]*)class="([^"]*)(collection-group-button)([^"]*)"[^>]*>)/u', '<ul$3class="$5 uk-width-auto uk-iconnav">', $html);
+			$html	 = preg_replace('/(<div[^>]*class="([^"]*)(button-del)([^"]*)"[^>]*><span[^>]*class="([^"]*)(icon-minus)([^"]*)"[^>]*><\/span><\/div>)/u', '<li><a href="#"  onclick="return false;" uk-icon="icon: minus-circle" class="button-del-' . $field->name . ' uk-text-danger icon-minus"></a></li>', $html);
+			$html	 = preg_replace('/(<div[^>]*class="([^"]*)(button-add)([^"]*)"[^>]*><span[^>]*class="([^"]*)(icon-plus)([^"]*)"[^>]*><\/span><\/div>)/u', '<li><a href="#" onclick="return false;"  uk-icon="icon: plus-circle" class="button-add-' . $field->name . ' uk-text-success icon-plus"></a></li>', $html);
+			$html	 = preg_replace('/(<div[^>]*class="([^"]*)(button-drag)([^"]*)"[^>]*><(span)[^>]*class="([^"]*)(icon-circle)([^"]*)"[^>]*><\/span><\/div>)/u', '<li><a href="#" onclick="return false;" uk-icon="icon: move" class="uk-text-primary icon-minus"></a></li>', $html);
+			$html	 = preg_replace('/class=\\"([^\\"]*)(uk-form-controls)([^\\"]*)\\"/', 'class="$1 uk-margin-remove-left $3"', $html);
+			$html	 = preg_replace('/class=\\"([^\\"]*)(cck_form_group_x)([^\\"]*)\\"/', 'class="$1 uk-clearfix uk-margin $3"', $html);
+			$html	 = preg_replace('/class=\\"([^\\"]*)(cck_wysiwyg_editor)([^\\"]*)\\"/', 'class="$1 uk-clearfix uk-margin1 $3"', $html);
+			// Upload File
+			$html	 = preg_replace('/(<input[^>]*type="file"[^>]*>)/u', '<div uk-form-custom="target: true" class="uk-width-expand">$1<input class="uk-input uk-form-width-1-1" type="text" placeholder="Выбрать" disabled></div>', $html);
+			$html	 = str_replace('<span class="hasTooltip" title="Check to delete the file">', '</div><span class="hasTooltip" title="Check to delete the file">', $html);
+//			// Inputs
+			$html	 = preg_replace('/class=\"([^\"_-]*)(text)([^\"]*)\"/', 'class="$1 uk-input $3"', $html);
+//			// Selects
+			$html	 = preg_replace('/class=\"([^\-"]*)(select)([^\"]*)\"/', 'class="$1uk-select $3"', $html);
+//			// Labels
+			$html	 = str_replace('<label', '<label class="uk-form-label"', $html);
+			$html	 = preg_replace('/<div([^>]*)>(<label([^>]*)>([^<]*)<\/label>)<\/div>/', '$2', $html);
+			$html	 = preg_replace('/<\/label><div([^>]*)class="([^\"]*)"/', '</label><div$1class="uk-form-controls $2"', $html);
+////
+//
+////			$html	 = preg_replace('/<div([^>]*)>(<label([^>]*)>([^<]*)<\/label>)<\/div>/', '$2', $html);
+//			$html	 = preg_replace('/<div([^>]*)>(<li>)(.*?)(<\/li>)<\/div>/si', '<li$1>$3</li>', $html);
+//			JBDump($html);
+			break;
 		case 'radio':
 			$html	 = str_replace('class="radio"', 'class="uk-radio"', $html);
 			$html	 = str_replace('class="radios"', 'class="uk-margin uk-grid-small uk-child-width-auto uk-grid"', $html);
@@ -129,6 +160,9 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 			break;
 
 		case 'select_simple':
+		case 'select_dynamic':
+		case 'select_numeric':
+		case 'select_nested':
 			$html = preg_replace('/class=\"([^\-"]*)(select)([^\"]*)\"/', 'class="$1uk-select $3"', $html);
 			break;
 
@@ -146,6 +180,16 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 				$html	 = preg_replace("/(<label for=\"([^\"]*)\">)/u", "", $html);
 				$html	 = preg_replace("/(<input[^>]*id=\"([^\"]*)\"[^>]*>)/u", "<label class='uk-margin-right' for='$2'>$1", $html);
 			}
+			break;
+		case 'currency_price':
+			$html	 = '<div uk-grid class="uk-grid-collapse"><div class="uk-width-expand">' . $html;
+			$html	 = preg_replace('/class=\"([^\"]*)(text)([^\"]*)\"/', 'class="$1uk-input uk-display-inline-block $3"', $html);
+			$html	 = str_replace('<select ', '</div><div class="uk-width-auto"><select ', $html);
+			$html	 = preg_replace('/class=\"([^\-"]*)(select)([^\"]*)\"/', 'class="$1uk-select uk-display-inline-block $3"', $html);
+			$html	 .= '</div></div>';
+			break;
+		case 'jform_tag':
+			$html	 = str_replace('tag', 'uk-select tag', $html);
 			break;
 	}
 // Fields layouts
@@ -193,10 +237,10 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 			}
 		}
 		$html = '<div id="' . $cck->id . '_' . $cck->mode_property . '_' . $field->name . '" class="uk-inline uk-width-1-1"><' . $tag . $add .
-				' class="uk-form-icon' . $flip . '" uk-icon="icon: ' . $icon . '"' . $tooltip . '></' . $tag .
+				' class="uk-form-icon' . $flip . '" uk-icon="icon: ' . $icon . '"' . $tooltip . $attr . '></' . $tag .
 				'>' . $html . '</div>';
 	}
-
+	$html = '<div class="uk-form-controls">' . $html . '</div>';
 
 	$html = '<div id="' . $cck->id . '_' . $field->name . '"  class="uk-margin ' . $field->name . ' ' . $field->markup_class . '">' . $label . $html . $desc . '</div>';
 
