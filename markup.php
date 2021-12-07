@@ -116,7 +116,8 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 		case 'field_x':
 			$doc	 = JFactory::getDocument();
 			$doc->addScript('/templates/' . $cck->template . '/fields/markup.js');
-			$html	 = preg_replace('/class=\\"([^\\"]*)(collection-group-wrap)([^\\"]*)\\"/', 'uk-grid class="$1 $2 $3"', $html);
+			$html	 = preg_replace('/class=\\"([^\\"]*)(adminformlist)([^\\"]*)\\"/', 'class="$1 $3"', $html); // класс adminformlist даёт доп. отступ
+			$html	 = preg_replace('/class=\\"([^\\"]*)(collection-group-wrap)([^\\"]*)\\"/', 'uk-grid class="$1 $3"', $html); // класс collection-group-wrap даёт доп. подчеркивание
 			$html	 = preg_replace('/class=\\"([^\\"]*)(collection-group-form)([^\\"]*)\\"/', 'class="$1 uk-width-expand $3"', $html);
 			// FieldX buttons
 			$html	 = preg_replace('/(<(div)([^>]*)class="([^"]*)(collection-group-button)([^"]*)"[^>]*>)/u', '<ul$3class="$5 uk-width-auto uk-iconnav">', $html);
