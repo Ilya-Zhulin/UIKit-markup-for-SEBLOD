@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         element.parentNode.removeChild(element);
         return elementNew;
     }
-    parents = document.querySelectorAll(".ui-sortable");
+    let parents = document.querySelectorAll(".ui-sortable");
     parents.forEach((parent) => {
         parent.addEventListener('click', function (event) {
             if (event.target.parentNode.tagName == 'svg') {
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
             setTimeout(function () {
                 // Кнfопки добавить/удалить
                 parent.querySelectorAll('aside').forEach((aside) => {
-                    points = aside.innerHTML.replace(/div/g, 'li');
+                    let points = aside.innerHTML.replace(/div/g, 'li');
                     points = points.replace(/<span/g, '<a href="#" onclick="return false"');
                     points = points.replace(/<\/span/g, '</a');
                     aside.outerHTML = '<ul class="uk-float-right uk-iconnav uk-margin-bottom">' + points + '</ul>';
@@ -53,26 +53,24 @@ document.addEventListener('DOMContentLoaded', function () {
                     iplus.querySelector('.collection-group-button').classList.add("uk-width-auto");
                     iplus.querySelector('.collection-group-button').innerHTML = '<li>' + minus + '</li><li>' + plus + '</li><li>' + drag + '</li>';
                     // File Upload
-                    if (iplus.querySelector('input[type="file"]')) {
-                        input = iplus.querySelector('input[type="file"]').outerHTML;
-                        iplus.querySelector('.collection-group-form').innerHTML = '<div uk-form-custom="target: true" class="uk-width-expand">' + input + '<input class="uk-input uk-width-1-1" type="text" placeholder="Выбрать" disabled>' + '</div>';
-                    }
+                    input = iplus.querySelector('input[type="file"]').outerHTML;
+                    iplus.querySelector('.collection-group-form').innerHTML = '<div uk-form-custom="target: true" class="uk-width-expand">' + input + '<input class="uk-input uk-width-1-1" type="text" placeholder="Выбрать" disabled>' + '</div>';
                 });
                 parent.querySelectorAll('a.icon-plus:not([uk-icon]').forEach((iplus) => {
                     iplus.classList.add("uk-text-success");
                     iplus.setAttribute("uk-icon", "icon: plus-circle");
                 })
-                parent.querySelectorAll('a.icon-minus:not([uk-icon]').forEach((iminus) => {
-                    iminus.classList.add("uk-text-danger");
-                    iminus.setAttribute("uk-icon", "icon: minus-circle");
-                })
-                parent.querySelectorAll('a.icon-circle:not([uk-icon]').forEach((imove) => {
-                    imove.classList.add("uk-text-primary");
-                    imove.setAttribute("uk-icon", "icon: move");
-                })
                 parent.querySelectorAll('span.icon-minus:not([uk-icon]').forEach((iminus) => {
                     iminus.classList.add("uk-text-danger");
                     iminus.setAttribute("uk-icon", "icon: minus-circle");
+                })
+                parent.querySelectorAll('a.icon-minus:not([uk-icon], span.icon-minus:not([uk-icon]').forEach((iminus) => {
+                    iminus.classList.add("uk-text-danger");
+                    iminus.setAttribute("uk-icon", "icon: minus-circle");
+                })
+                parent.querySelectorAll('a.icon-circle:not([uk-icon], span.icon-circle:not([uk-icon]').forEach((imove) => {
+                    imove.classList.add("uk-text-primary");
+                    imove.setAttribute("uk-icon", "icon: move");
                 })
                 parent.querySelectorAll('span.icon-circle:not([uk-icon]').forEach((imove) => {
                     imove.classList.add("uk-text-primary");
@@ -89,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 parent.querySelectorAll('.cck_cgx.cck_cgx_form:not(.uk-width-1-1)').forEach((wrapform) => {
                     wrapform.classList.add("uk-width-1-1");
                     wrapform.querySelectorAll('.cck_forms.cck_site').forEach((wrapfield) => {
-                        FirstChild = wrapfield.firstElementChild;
+                        let FirstChild = wrapfield.firstElementChild;
                         FirstChild.outerHTML = FirstChild.innerHTML;
                     });
                 })

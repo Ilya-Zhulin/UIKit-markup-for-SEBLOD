@@ -64,6 +64,7 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 
 
 //	Field Types
+//	JBDump($field->name, 0);
 //	JBDump($field->type, 0);
 	switch ($field->type) {
 		case 'checkbox':
@@ -164,11 +165,22 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 		case 'select_dynamic':
 		case 'select_numeric':
 		case 'select_nested':
+		case 'jform_category':
+		case 'jform_accesslevel':
+		case 'jform_contentlanguage':
 			$html = preg_replace('/class=\"([^\-"]*)(select)([^\"]*)\"/', 'class="$1uk-select $3"', $html);
 			break;
 
+		case 'jform_calendar':
+			$html	 = preg_replace('/class=\"([^\"]*)(text)([^\"]*)\"/', 'class="$1uk-input $3"', $html);
+			$html	 = preg_replace('/class=\"([^\"]*)(btn)([^\"]*)\"/', 'class="$1uk-button uk-button-link uk-form-icon $3"', $html);
+			$html	 = str_replace('class="icon-calendar"', 'uk-icon="calendar"', $html);
+			$html	 = str_replace('class="input-append"', 'class="uk-inline uk-width-1-1"', $html);
+			$html	 = (str_replace(PHP_EOL, '', $html));
+			$html	 = preg_replace('/(<input[^>]*>)(\W)\s*(<button.*<\/(button>))/si', '$3$1', $html);
+			break;
 		case 'text':
-			$html = preg_replace('/class=\"([^\"]*)(text)([^\"]*)\"/', 'class="$1uk-input $3"', $html);
+			$html	 = preg_replace('/class=\"([^\"]*)(text)([^\"]*)\"/', 'class="$1uk-input $3"', $html);
 			break;
 
 		case 'upload_image':
