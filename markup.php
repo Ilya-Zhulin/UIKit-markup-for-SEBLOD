@@ -148,16 +148,11 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 		case 'radio':
 			$html	 = str_replace('class="radio"', 'class="uk-radio"', $html);
 			$html	 = str_replace('class="radios"', 'class="uk-margin uk-grid-small uk-child-width-auto uk-grid"', $html);
-			$html	 = str_replace('fieldset', 'div', $html);
+//			$html	 = str_replace('fieldset', 'div', $html); НЕЛЬЗЯ МЕНЯТЬ!!! НЕ РАБОТАЮТ CONDITIONAL STATES
 			if (stripos($field->attributes, 'data-input-label') === FALSE) {
 				$html	 = preg_replace("/(<label for=\"([^\"]*)\">)/u", "", $html);
 				$html	 = preg_replace("/(<input[^>]*id=\"([^\"]*)\"[^>]*>)/u", "<label for='$2'>$1 ", $html);
 				$html	 = str_replace('</label>', '</label>', $html);
-			}
-			if ($label != '') {
-				$html = '<div ' . $addAttr . 'class="uk-form-controls ' . $field->name . ' ' . $field->type . $addClass . '">' . $html . '</div>';
-			} else {
-				$html = '<div class="' . $field->name . ' ' . $field->type . $addClass . '">' . $html . '</div>';
 			}
 			break;
 
