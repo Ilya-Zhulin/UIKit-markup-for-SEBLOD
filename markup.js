@@ -53,8 +53,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     iplus.querySelector('.collection-group-button').classList.add("uk-width-auto");
                     iplus.querySelector('.collection-group-button').innerHTML = '<li>' + minus + '</li><li>' + plus + '</li><li>' + drag + '</li>';
                     // File Upload
-                    input = iplus.querySelector('input[type="file"]').outerHTML;
-                    iplus.querySelector('.collection-group-form').innerHTML = '<div uk-form-custom="target: true" class="uk-width-expand">' + input + '<input class="uk-input uk-width-1-1" type="text" placeholder="Выбрать" disabled>' + '</div>';
+                    if (iplus.querySelector('input[type="file"]')) {
+                        input = iplus.querySelector('input[type="file"]').outerHTML;
+                        iplus.querySelector('.collection-group-form').innerHTML = '<div uk-form-custom="target: true" class="uk-width-expand">' + input + '<input class="uk-input uk-width-1-1" type="text" placeholder="Выбрать" disabled>' + '</div>';
+                    }
                 });
                 parent.querySelectorAll('a.icon-plus:not([uk-icon]').forEach((iplus) => {
                     iplus.classList.add("uk-text-success");
