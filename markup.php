@@ -116,8 +116,9 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 			break;
 		case 'field_x':
 			$doc	 = JFactory::getDocument();
-			$doc->addScript('/templates/' . $cck->template . '/fields/markup.js');
+			$doc->addScript('/templates/' . $cck->template . '/fields/markup.min.js');
 			$html	 = preg_replace('/class=\\"([^\\"]*)(adminformlist)([^\\"]*)\\"/', 'class="$1 $3"', $html); // класс adminformlist даёт доп. отступ
+			$html	 = str_replace('<div><div id="collection-group-wrap', '<div class="uk-clearfix uk-margin"><div id="collection-group-wrap', $html);
 			$html	 = preg_replace('/class=\\"([^\\"]*)(collection-group-wrap)([^\\"]*)\\"/', 'uk-grid class="$1 $3"', $html); // класс collection-group-wrap даёт доп. подчеркивание
 			$html	 = preg_replace('/class=\\"([^\\"]*)(collection-group-form)([^\\"]*)\\"/', 'class="$1 uk-width-expand $3"', $html);
 			// FieldX buttons
@@ -125,6 +126,7 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 			$html	 = preg_replace('/(<div[^>]*class="([^"]*)(button-del)([^"]*)"[^>]*><span[^>]*class="([^"]*)(icon-minus)([^"]*)"[^>]*><\/span><\/div>)/u', '<li><a href="#"  onclick="return false;" uk-icon="icon: minus-circle" class="button-del-' . $field->name . ' uk-text-danger icon-minus"></a></li>', $html);
 			$html	 = preg_replace('/(<div[^>]*class="([^"]*)(button-add)([^"]*)"[^>]*><span[^>]*class="([^"]*)(icon-plus)([^"]*)"[^>]*><\/span><\/div>)/u', '<li><a href="#" onclick="return false;"  uk-icon="icon: plus-circle" class="button-add-' . $field->name . ' uk-text-success icon-plus"></a></li>', $html);
 			$html	 = preg_replace('/(<div[^>]*class="([^"]*)(button-drag)([^"]*)"[^>]*><(span)[^>]*class="([^"]*)(icon-circle)([^"]*)"[^>]*><\/span><\/div>)/u', '<li><a href="#" onclick="return false;" uk-icon="icon: move" class="uk-text-primary icon-minus"></a></li>', $html);
+			$html	 = preg_replace('/<\/li>\s?<\/div>/', '</li></ul>', $html);
 			$html	 = preg_replace('/class=\\"([^\\"]*)(uk-form-controls)([^\\"]*)\\"/', 'class="$1 uk-margin-remove-left $3"', $html);
 			$html	 = preg_replace('/class=\\"([^\\"]*)(cck_form_group_x)([^\\"]*)\\"/', 'class="$1 uk-clearfix uk-margin $3"', $html);
 			$html	 = preg_replace('/class=\\"([^\\"]*)(cck_wysiwyg_editor)([^\\"]*)\\"/', 'class="$1 uk-clearfix uk-margin1 $3"', $html);
@@ -254,5 +256,3 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 
 	return $html;
 }
-
-?>
