@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version 			SEBLOD 3.x Core
+ * @version 		11.03.2022
  * @package			SEBLOD (App Builder & CCK) // SEBLOD nano (Form Builder)
  * @url				http://www.seblod.com
  * @editor			Octopoos - www.octopoos.com
