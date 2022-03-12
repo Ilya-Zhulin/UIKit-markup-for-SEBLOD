@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     parents.forEach((parent) => {
         parent.addEventListener('click', function (event) {
             if (event.target.parentNode.tagName == 'svg') {
-                svg = event.target.parentNode;
+                let svg = event.target.parentNode;
                 if (!svg.parentNode.classList.contains('icon-plus')) {
                     return false;
                 }
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
             setTimeout(function () {
-                // Кнfопки добавить/удалить
+                // Кнопки добавить/удалить
                 parent.querySelectorAll('aside').forEach((aside) => {
                     let points = aside.innerHTML.replace(/div/g, 'li');
                     points = points.replace(/<span/g, '<a href="#" onclick="return false"');
@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     aside.outerHTML = '<ul class="uk-float-right uk-iconnav uk-margin-bottom">' + points + '</ul>';
                 })
                 parent.querySelectorAll('.collection-group-wrap:not([uk-grid]').forEach((iplus) => {
+                    let minus, plus, drag;
                     iplus.setAttribute("uk-grid", "");
                     iplus.querySelector('.collection-group-form').classList.add("uk-width-expand");
                     // Кнопки
