@@ -75,11 +75,13 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 				$html	 = preg_replace("/(<label for=\"([^\"]*)\">)/u", "", $html);
 				$html	 = preg_replace("/(<input[^>]*id=\"([^\"]*)\"[^>]*>)/u", "<label class='uk-margin-right' for='$2'>$1", $html);
 			}
+			$html = preg_replace('/<label([^>]*)>(<input[^>]*checked="checked"[^>]*>)/', '<label class="label-checkbox-active"$1>$2', $html);
 			break;
 		case 'checkbox_dynamic':
 			$html	 = preg_replace('/class=\"([^\"]*)(uk-input)([^\"]*)\"/', 'class="$1uk-checkbox uk-margin-right-small $3"', $html);
 			$html	 = preg_replace('/label><input([^>]*optgroup[^>]*)><label([^>]*)>([^>]*label>)/', 'label><span class="uk-clearfix"></span><label class="uk-form-label uk-text-bold uk-clearfix">$3', $html);
 			$html	 = preg_replace('/"><input([^>]*optgroup[^>]*)><label([^>]*)>([^>]*label>)/', '"><label class="uk-form-label uk-text-bold uk-clearfix">$3', $html);
+			$html = preg_replace('/<label([^>]*)>(<input[^>]*checked="checked"[^>]*>)/', '<label class="label-checkbox-active"$1>$2', $html);
 			break;
 
 		case 'textarea':
@@ -156,6 +158,8 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 				$html	 = preg_replace("/(<input[^>]*id=\"([^\"]*)\"[^>]*>)/u", "<label for='$2'>$1 ", $html);
 				$html	 = str_replace('</label>', '</label>', $html);
 			}
+			
+			$html = preg_replace('/<label([^>]*)>(<input[^>]*checked="checked"[^>]*>)/', '<label class="label-radio-active"$1>$2', $html);
 			break;
 
 		case 'select_simple':
