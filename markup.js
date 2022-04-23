@@ -55,7 +55,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     iplus.querySelector('.collection-group-button').innerHTML = '<li>' + minus + '</li><li>' + plus + '</li><li>' + drag + '</li>';
                     // File Upload
                     if (iplus.querySelector('input[type="file"]')) {
-                        input = iplus.querySelector('input[type="file"]').outerHTML;
+                        let input = iplus.querySelector('input[type="file"]').outerHTML;
+                        input += iplus.querySelector('input[type="hidden"]').outerHTML;
                         iplus.querySelector('.collection-group-form').innerHTML = '<div uk-form-custom="target: true" class="uk-width-expand">' + input + '<input class="uk-input uk-width-1-1" type="text" placeholder="Выбрать" disabled>' + '</div>';
                     }
                 });
@@ -111,6 +112,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     el.classList.add('uk-form-label');
                 });
             }, 100);
+        });
+    });
+    let radios = document.querySelectorAll("input[type=radio]");
+    radios.forEach((radio) => {
+        radio.addEventListener('change', function (event) {
+            if (radio.checked) {
+                let name = radio.getAttribute('name');
+                document.querySelectorAll("[name=" + name + "]").forEach(item => {
+                    item.closest("label").classList.remove("label-radio-active");
+                });
+                radio.closest("label").classList.add("label-radio-active");
+            }
         });
     });
 });
