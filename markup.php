@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version 		11.03.2022
+ * @version 			SEBLOD 3.x Core
  * @package			SEBLOD (App Builder & CCK) // SEBLOD nano (Form Builder)
  * @url				http://www.seblod.com
  * @editor			Octopoos - www.octopoos.com
@@ -75,13 +75,11 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 				$html	 = preg_replace("/(<label for=\"([^\"]*)\">)/u", "", $html);
 				$html	 = preg_replace("/(<input[^>]*id=\"([^\"]*)\"[^>]*>)/u", "<label class='uk-margin-right' for='$2'>$1", $html);
 			}
-			$html = preg_replace('/<label([^>]*)>(<input[^>]*checked="checked"[^>]*>)/', '<label class="label-checkbox-active"$1>$2', $html);
 			break;
 		case 'checkbox_dynamic':
 			$html	 = preg_replace('/class=\"([^\"]*)(uk-input)([^\"]*)\"/', 'class="$1uk-checkbox uk-margin-right-small $3"', $html);
 			$html	 = preg_replace('/label><input([^>]*optgroup[^>]*)><label([^>]*)>([^>]*label>)/', 'label><span class="uk-clearfix"></span><label class="uk-form-label uk-text-bold uk-clearfix">$3', $html);
 			$html	 = preg_replace('/"><input([^>]*optgroup[^>]*)><label([^>]*)>([^>]*label>)/', '"><label class="uk-form-label uk-text-bold uk-clearfix">$3', $html);
-			$html = preg_replace('/<label([^>]*)>(<input[^>]*checked="checked"[^>]*>)/', '<label class="label-checkbox-active"$1>$2', $html);
 			break;
 
 		case 'textarea':
@@ -134,7 +132,7 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 			$html	 = preg_replace('/class=\\"([^\\"]*)(cck_wysiwyg_editor)([^\\"]*)\\"/', 'class="$1 uk-clearfix uk-margin1 $3"', $html);
 			// Upload File
 			$html	 = preg_replace('/(<input[^>]*type="file"[^>]*>)/u', '<div uk-form-custom="target: true" class="uk-width-expand">$1<input class="uk-input uk-form-width-1-1" type="text" placeholder="Выбрать" disabled></div>', $html);
-			$html	 = str_replace('<span class="hasTooltip" title="Check to delete the file">', '</div><span class="hasTooltip" title="Check to delete the file">', $html);
+			$html	 = str_replace('<span class="hasTooltip" title="Check to delete the file">', '<span class="hasTooltip" title="Check to delete the file">', $html);
 //			// Inputs
 			$html	 = preg_replace('/class=\"([^\"_-]*)(text)([^\"]*)\"/', 'class="$1 uk-input $3"', $html);
 //			// Selects
@@ -150,15 +148,16 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 //			JBDump($html);
 			break;
 		case 'radio':
+			$doc	 = JFactory::getDocument();
+			$doc->addScript('/templates/' . $cck->template . '/fields/markup.min.js');
 			$html	 = str_replace('class="radio"', 'class="uk-radio"', $html);
-			$html	 = str_replace('class="radios"', 'class="uk-margin uk-grid-small uk-child-width-auto uk-grid uk-fieldset"', $html);
+			$html	 = str_replace('class="radios', 'class="uk-fieldset radios', $html);
 //			$html	 = str_replace('fieldset', 'div', $html); НЕЛЬЗЯ МЕНЯТЬ!!! НЕ РАБОТАЮТ CONDITIONAL STATES
 			if (stripos($field->attributes, 'data-input-label') === FALSE) {
 				$html	 = preg_replace("/(<label for=\"([^\"]*)\">)/u", "", $html);
 				$html	 = preg_replace("/(<input[^>]*id=\"([^\"]*)\"[^>]*>)/u", "<label for='$2'>$1 ", $html);
 				$html	 = str_replace('</label>', '</label>', $html);
 			}
-			
 			$html = preg_replace('/<label([^>]*)>(<input[^>]*checked="checked"[^>]*>)/', '<label class="label-radio-active"$1>$2', $html);
 			break;
 
@@ -185,6 +184,17 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 			break;
 
 		case 'upload_image':
+			$html	 = preg_replace('/class=\"([^\"]*)(input)([^\"]*)\"([^>])(type="checkbox")(.*)>/', 'class="$1uk-checkbox $3"$4$5$6>', $html);
+			$html	 = preg_replace('/class=\"([^\"]*)(input)([^\"]*)\"/', 'class="$1uk-input $3"', $html);
+			$html	 = str_replace(array('class="checkbox ', 'class="checkbox"'), array('class="uk-checkbox uk-margin-small-right ', 'class="uk-checkbox uk-margin-small-right"'), $html);
+			$html	 = str_replace('class="checkboxes', 'class="uk-fieldset', $html);
+			$html	 = str_replace('fieldset', 'div', $html);
+			if (stripos($field->attributes, 'data-input-label') === FALSE) {
+				$html	 = preg_replace("/(<label for=\"([^\"]*)\">)/u", "", $html);
+				$html	 = preg_replace("/(<input[^>]*id=\"([^\"]*)\"[^>]*>)/u", "<label class='uk-margin-right' for='$2'>$1", $html);
+			}
+			break;
+		case 'upload_file':
 			$html	 = preg_replace('/class=\"([^\"]*)(input)([^\"]*)\"([^>])(type="checkbox")(.*)>/', 'class="$1uk-checkbox $3"$4$5$6>', $html);
 			$html	 = preg_replace('/class=\"([^\"]*)(input)([^\"]*)\"/', 'class="$1uk-input $3"', $html);
 			$html	 = str_replace(array('class="checkbox ', 'class="checkbox"'), array('class="uk-checkbox uk-margin-small-right ', 'class="uk-checkbox uk-margin-small-right"'), $html);

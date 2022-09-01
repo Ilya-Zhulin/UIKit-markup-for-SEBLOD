@@ -38,26 +38,30 @@ document.addEventListener('DOMContentLoaded', function () {
                     points = points.replace(/<\/span/g, '</a');
                     aside.outerHTML = '<ul class="uk-float-right uk-iconnav uk-margin-bottom">' + points + '</ul>';
                 })
-                parent.querySelectorAll('.collection-group-wrap:not([uk-grid]').forEach((iplus) => {
-                    let minus, plus, drag;
-                    iplus.setAttribute("uk-grid", "");
-                    iplus.querySelector('.collection-group-form').classList.add("uk-width-expand");
-                    // Кнопки
-                    replaceTag(iplus.querySelector('span.icon-minus'), 'a');
-                    replaceTag(iplus.querySelector('span.icon-plus'), 'a');
-                    replaceTag(iplus.querySelector('span.icon-circle'), 'a');
-                    minus = iplus.querySelector('.collection-group-button').querySelector('.button-del').innerHTML;
-                    plus = iplus.querySelector('.collection-group-button').querySelector('.button-add').innerHTML;
-                    drag = iplus.querySelector('.collection-group-button').querySelector('.button-drag').innerHTML;
-                    replaceTag(iplus.querySelector('.collection-group-button'), 'ul');
-                    iplus.querySelector('.collection-group-button').classList.add("uk-iconnav");
-                    iplus.querySelector('.collection-group-button').classList.add("uk-width-auto");
-                    iplus.querySelector('.collection-group-button').innerHTML = '<li>' + minus + '</li><li>' + plus + '</li><li>' + drag + '</li>';
-                    // File Upload
-                    if (iplus.querySelector('input[type="file"]')) {
-                        let input = iplus.querySelector('input[type="file"]').outerHTML;
-                        input += iplus.querySelector('input[type="hidden"]').outerHTML;
-                        iplus.querySelector('.collection-group-form').innerHTML = '<div uk-form-custom="target: true" class="uk-width-expand">' + input + '<input class="uk-input uk-width-1-1" type="text" placeholder="Выбрать" disabled>' + '</div>';
+                parent.querySelectorAll('.collection-group-wrap').forEach((iplus, i) => {
+                    if (!iplus.classList.contains("uk-grid")) {
+                        let minus, plus, drag;
+                        iplus.setAttribute("uk-grid", "");
+                        iplus.querySelector('.collection-group-form').classList.add("uk-width-expand");
+                        // Кнопки
+                        replaceTag(iplus.querySelector('span.icon-minus'), 'a');
+                        replaceTag(iplus.querySelector('span.icon-plus'), 'a');
+                        replaceTag(iplus.querySelector('span.icon-circle'), 'a');
+                        minus = iplus.querySelector('.collection-group-button').querySelector('.button-del').innerHTML;
+                        plus = iplus.querySelector('.collection-group-button').querySelector('.button-add').innerHTML;
+                        drag = iplus.querySelector('.collection-group-button').querySelector('.button-drag').innerHTML;
+                        replaceTag(iplus.querySelector('.collection-group-button'), 'ul');
+                        iplus.querySelector('.collection-group-button').classList.add("uk-iconnav");
+                        iplus.querySelector('.collection-group-button').classList.add("uk-width-auto");
+                        iplus.querySelector('.collection-group-button').innerHTML = '<li>' + minus + '</li><li>' + plus + '</li><li>' + drag + '</li>';
+                        // File Upload
+                        if (iplus.querySelector('input[type="file"]')) {
+                            iplus.querySelector('input[type="file"]').append()
+                            let input = iplus.querySelector('input[type="file"]').outerHTML,
+                                    input_h = iplus.querySelector('input[type="hidden"]').outerHTML;
+                            iplus.querySelector('.collection-group-form').innerHTML = '<div uk-form-custom="target: true" class="uk-width-expand">' + input + '<input class="uk-input uk-width-1-1" type="text" placeholder="Выбрать" disabled>' + input_h + '</div>';
+                        }
+
                     }
                 });
                 parent.querySelectorAll('a.icon-plus:not([uk-icon]').forEach((iplus) => {
@@ -111,6 +115,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 parent.querySelectorAll('label:not(.uk-form-label)').forEach((el) => {
                     el.classList.add('uk-form-label');
                 });
+                // Numbers
+//                parent.querySelectorAll('.collection-group-wrap').forEach((el, i) => {
+//                    el.HTML = el.HTML.replace('gallery__0')
+//                });
             }, 100);
         });
     });
