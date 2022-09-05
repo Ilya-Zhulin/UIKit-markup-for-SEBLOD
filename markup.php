@@ -52,7 +52,7 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 
 	$label = '';
 	if ($options->get('field_label', $cck->getStyleParam('field_label', 1))) {
-		if (strpos($field->markup_class, 'tyres-label-ph') !== FALSE && ($field->type == 'text' || $field->type == 'textarea')) {
+		if (strpos($field->markup_class, 'tyres-label-ph') !== FALSE && ($field->type == 'text' || $field->type == 'textarea' || $field->type == 'password')) {
 			$label	 = $cck->getLabel($field->name, false, ( $field->required ? '*' : ''));
 			$html	 = ( $label != '' ) ? str_replace(array('<input', '<textarea'), array('<input placeholder="' . $label . '"', '<textarea placeholder="' . $label . '"'), $html) : $html;
 			$label	 = '';
@@ -179,8 +179,13 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 			$html	 = (str_replace(PHP_EOL, '', $html));
 			$html	 = preg_replace('/(<input[^>]*>)(\W)\s*(<button.*<\/(button>))/si', '$3$1', $html);
 			break;
+
+		case 'password':
+			$html = preg_replace('/class=\"([^\"]*)(inputbox)([^\"]*)\"/', 'class="$1uk-input $3"', $html);
+			break;
+
 		case 'text':
-			$html	 = preg_replace('/class=\"([^\"]*)(text)([^\"]*)\"/', 'class="$1uk-input $3"', $html);
+			$html = preg_replace('/class=\"([^\"]*)(text)([^\"]*)\"/', 'class="$1uk-input $3"', $html);
 			break;
 
 		case 'upload_image':
@@ -264,7 +269,7 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 				' class="uk-form-icon' . $flip . '" uk-icon="icon: ' . $icon . '"' . $tooltip . $attr . '></' . $tag .
 				'>' . $html . '</div>';
 	}
-	$html = '<div class="uk-form-controls">' . $html . '</div>';
+//	$html = '<div class="uk-form-controls">' . $html . '</div>'; В text два раза оборачивается.
 
 	$html = '<div id="' . $cck->id . '_' . $field->name . '"  class="uk-margin ' . $field->name . ' ' . $field->markup_class . '">' . $label . $html . $desc . '</div>';
 
