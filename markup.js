@@ -1,6 +1,7 @@
 /**
  * Markup.js has created for helping to transfer SEBLOD 3.x template to UIKit html
  * by Ilya A.Zhulin 2021
+ * Last edition 10.12.2022
  */
 document.addEventListener('DOMContentLoaded', function () {
     function replaceTag(element, newTag) {
@@ -24,12 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (node.matches('[class*="cck_form_group_x"]') || node.matches('.ui-sortable > div')) {
                     const aside = node.querySelector('aside');
                     if (aside) {
-                        points = aside.innerHTML.replace(/div/g, 'li');
-                        points = points.replace(/<span/g, '<a href="#" onclick="return false"');
+                        let points = aside.innerHTML.replace(/div/g, 'li');
+                        points = points.replace(/<span/g, '<a href="#" ');
                         points = points.replace(/<\/span/g, '</a');
                         aside.outerHTML = '<ul class="uk-float-right uk-iconnav uk-margin-bottom">' + points + '</ul>';
                     }
-                    collection_wrap = node.querySelector('.collection-group-wrap:not([uk-grid]');
+                    let collection_wrap = node.querySelector('.collection-group-wrap:not([uk-grid]');
                     if (collection_wrap) {
                         collection_wrap.setAttribute("uk-grid", "");
                         collection_wrap.querySelector('.collection-group-form').classList.add("uk-width-expand");
@@ -52,13 +53,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     node.querySelector('.icon-plus').classList.add("uk-text-success");
                     node.querySelector('.icon-plus').setAttribute("uk-icon", "icon: plus-circle");
+                    node.querySelector('.icon-plus').setAttribute("onclick", "return false;");
                     node.querySelector('.icon-minus').classList.add("uk-text-danger");
                     node.querySelector('.icon-minus').setAttribute("uk-icon", "icon: minus-circle");
+                    node.querySelector('.icon-minus').setAttribute("onclick", "return false;");
                     node.querySelector('.icon-circle').classList.add("uk-text-primary");
                     node.querySelector('.icon-circle').setAttribute("uk-icon", "icon: move");
+                    node.querySelector('.icon-circle').setAttribute("onclick", "return false;");
                     node.classList.add("uk-clearfix");
                     node.classList.add("uk-margin");
-                    wrapform = node.querySelector('.cck_cgx.cck_cgx_form:not(.uk-width-1-1)');
+                    let wrapform = node.querySelector('.cck_cgx.cck_cgx_form:not(.uk-width-1-1)');
                     if (wrapform) {
                         wrapform.classList.add("uk-width-1-1");
                         wrapform.querySelectorAll('.cck_forms.cck_site').forEach((wrapfield) => {
