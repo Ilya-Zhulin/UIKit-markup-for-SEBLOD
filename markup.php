@@ -330,7 +330,7 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 		case 'checkbox':
 			$html	 = str_replace(array('class="checkbox ', 'class="checkbox"'), array('class="uk-checkbox uk-margin-small-right ', 'class="uk-checkbox uk-margin-small-right"'), $html);
 			$html	 = str_replace('class="checkboxes', 'class="uk-fieldset', $html);
-			$html	 = str_replace('fieldset', 'div', $html);
+//			$html	 = str_replace('fieldset', 'div', $html); должен быть Fieldset - иначе не работает conditions
 			if (stripos($field->attributes, 'data-input-label') === FALSE) {
 				$html	 = preg_replace("/(<label for=\"([^\"]*)\">)/u", "", $html);
 				$html	 = preg_replace("/(<input[^>]*id=\"([^\"]*)\"[^>]*>)/u", "<label class='uk-margin-right' for='$2'>$1", $html);
