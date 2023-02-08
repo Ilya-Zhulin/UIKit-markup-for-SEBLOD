@@ -1,7 +1,7 @@
 /**
  * Markup.js has created for helping to transfer SEBLOD 3.x template to UIKit html
  * by Ilya A.Zhulin 2021
- * Last edition 10.12.2022
+ * Last edition 08.02.2023
  */
 document.addEventListener('DOMContentLoaded', function () {
     function replaceTag(element, newTag) {
@@ -47,8 +47,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         collection_wrap.querySelector('.collection-group-button').innerHTML = '<div>' + minus + '</div><div>' + plus + '</div><div>' + drag + '</div>';
                         // File Upload
                         if (collection_wrap.querySelector('input[type="file"]')) {
-                            const input = collection_wrap.querySelector('input[type="file"]').outerHTML;
-                            collection_wrap.querySelector('.collection-group-form').innerHTML = '<div uk-grid><div uk-form-custom="target: true" class="uk-width-expand">' + input + '<input class="uk-input uk-width-1-1" type="text" placeholder="Выбрать" disabled>' + '</div></div>';
+                            const new_input = document.createElement('input');
+                            new_input.classList.add("uk-input", "uk-with-1-1")
+                            new_input.setAttribute('type', 'text');
+                            new_input.setAttribute('placeholder', 'Выбрать');
+                            new_input.setAttribute("disabled", "");
+                            new_input.setAttribute("aria-label", "Custom controls");
+                            collection_wrap.querySelector('input[type="file"]').after(new_input);
+                            const input = collection_wrap.querySelector('input[type="file"]').parentElement.innerHTML;
+                            collection_wrap.querySelector('.collection-group-form').innerHTML = '<div uk-grid><div uk-form-custom="target: true" class="uk-width-expand">' + input + '' + '</div></div>';
                         }
                     }
                     node.querySelector('.icon-plus').classList.add("uk-text-success");
