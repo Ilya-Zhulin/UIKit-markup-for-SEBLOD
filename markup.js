@@ -41,14 +41,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         minus = collection_wrap.querySelector('.collection-group-button').querySelector('.button-del').innerHTML;
                         plus = collection_wrap.querySelector('.collection-group-button').querySelector('.button-add').innerHTML;
                         drag = collection_wrap.querySelector('.collection-group-button').querySelector('.button-drag').innerHTML;
-                        replaceTag(collection_wrap.querySelector('.collection-group-button'), 'ul');
-                        collection_wrap.querySelector('.collection-group-button').classList.add("uk-iconnav");
-                        collection_wrap.querySelector('.collection-group-button').classList.add("uk-width-auto");
-                        collection_wrap.querySelector('.collection-group-button').innerHTML = '<li>' + minus + '</li><li>' + plus + '</li><li>' + drag + '</li>';
+//                        replaceTag(collection_wrap.querySelector('.collection-group-button'), 'ul');
+                        collection_wrap.querySelector('.collection-group-button').classList.add("uk-iconnav", "uk-width-auto", "uk-padding", "uk-padding-remove-right");
+                        collection_wrap.querySelector('.collection-group-button').classList.add();
+                        collection_wrap.querySelector('.collection-group-button').innerHTML = '<div>' + minus + '</div><div>' + plus + '</div><div>' + drag + '</div>';
                         // File Upload
                         if (collection_wrap.querySelector('input[type="file"]')) {
                             const input = collection_wrap.querySelector('input[type="file"]').outerHTML;
-                            collection_wrap.querySelector('.collection-group-form').innerHTML = '<div uk-form-custom="target: true" class="uk-width-expand">' + input + '<input class="uk-input uk-width-1-1" type="text" placeholder="Выбрать" disabled>' + '</div>';
+                            collection_wrap.querySelector('.collection-group-form').innerHTML = '<div uk-grid><div uk-form-custom="target: true" class="uk-width-expand">' + input + '<input class="uk-input uk-width-1-1" type="text" placeholder="Выбрать" disabled>' + '</div></div>';
                         }
                     }
                     node.querySelector('.icon-plus').classList.add("uk-text-success");
