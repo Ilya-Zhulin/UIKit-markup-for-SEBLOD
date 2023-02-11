@@ -1,7 +1,7 @@
 /**
  * Markup.js has created for helping to transfer SEBLOD 3.x template to UIKit html
  * by Ilya A.Zhulin 2021
- * Last edition 08.02.2023
+ * Last edition 11.02.2023
  */
 document.addEventListener('DOMContentLoaded', function () {
     function replaceTag(element, newTag) {
@@ -38,9 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         replaceTag(collection_wrap.querySelector('span.icon-minus'), 'a');
                         replaceTag(collection_wrap.querySelector('span.icon-plus'), 'a');
                         replaceTag(collection_wrap.querySelector('span.icon-circle'), 'a');
-                        minus = collection_wrap.querySelector('.collection-group-button').querySelector('.button-del').innerHTML;
-                        plus = collection_wrap.querySelector('.collection-group-button').querySelector('.button-add').innerHTML;
-                        drag = collection_wrap.querySelector('.collection-group-button').querySelector('.button-drag').innerHTML;
+                        let minus = collection_wrap.querySelector('.collection-group-button').querySelector('.button-del').innerHTML, plus = collection_wrap.querySelector('.collection-group-button').querySelector('.button-add').innerHTML, drag = collection_wrap.querySelector('.collection-group-button').querySelector('.button-drag').innerHTML;
 //                        replaceTag(collection_wrap.querySelector('.collection-group-button'), 'ul');
                         collection_wrap.querySelector('.collection-group-button').classList.add("uk-iconnav", "uk-width-auto", "uk-padding", "uk-padding-remove-right");
                         collection_wrap.querySelector('.collection-group-button').classList.add();
