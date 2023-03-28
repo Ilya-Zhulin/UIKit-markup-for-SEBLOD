@@ -7,7 +7,7 @@
  * @editor			Octopoos - www.octopoos.com
  * @copyright		Copyright (C) 2013 SEBLOD. All Rights Reserved.
  * @license 			GNU General Public License version 2 or later; see _LICENSE.php
- * @updated			08/02/2023
+ * @updated			28/03/2023
  * */
 defined('_JEXEC') or die;
 
@@ -21,6 +21,12 @@ use Joomla\CMS\Factory;
 //	- fields/[searchtype]/markup.php	=>	cckMarkup_[template]_[searchtype]
 // Write your Custom Markup code. (see default markup below)
 // cckMarkup
+//Including options:
+//	data-form-icon = "icon-name" - to make Form with icon field (https://getuikit.com/docs/form#form-and-icons)
+//		data-form-icon-flip - make Form with icons to right side
+//		data-form-icon-a - make Form with clickable icon
+//		data-form-icon-a-flip - make Form with clickable icon to right side
+//	data-form-icon-tooltip = "tooltip-text" - add this attribute to make tooltip to the icon
 
 function cckMarkup_seb_minima($cck, $html, $field, $options) {
 	$desc		 = '';
@@ -107,15 +113,15 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 			$html	 = preg_replace('/class=\\"([^\\"]*)(cck_wysiwyg_editor)([^\\"]*)\\"/', 'class="$1 uk-clearfix uk-margin1 $3"', $html);
 			$html	 = str_replace('<input type="file"', '<div uk-form-custom="target: true" class="uk-form-custom uk-width-1-1"><input class="target uk-input uk-width-1-1" type="text" placeholder="Кликните, чтобы выбрать файл" disabled=""><input type="file', $html);
 			$html	 = str_replace('<span class="hasTooltip" title="Check to delete the file">', '</div><span class="hasTooltip" title="Check to delete the file">', $html);
-			// Inputs
+// Inputs
 			$html	 = preg_replace('/class=\"([^\"_]*)(text)([^\"]*)\"/', 'class="$1 uk-input $3"', $html);
-			// Selects
+// Selects
 			$html	 = preg_replace('/class=\"([^\-"]*)(select)([^\"]*)\"/', 'class="$1uk-select $3"', $html);
-			// Labels
+// Labels
 			$html	 = str_replace('<label', '<label class="uk-form-label"', $html);
 			$html	 = preg_replace('/<div([^>]*)>(<label([^>]*)>([^<]*)<\/label>)<\/div>/', '$2', $html);
 			$html	 = preg_replace('/<\/label><div([^>]*)class="([^\"]*)"/', '</label><div$1class="uk-form-controls $2"', $html);
-			// GroupX
+// GroupX
 			$html	 = str_replace('<span class="icon-minus"></span>', '<li><a href="#" onclick="return false" uk-icon="icon: minus-circle" class="uk-text-danger icon-minus"></a></li>', $html);
 			$html	 = str_replace('<span class="icon-plus"></span>', '<li><a href="#" onclick="return false" uk-icon="icon: plus-circle" class="uk-text-success icon-plus"></a></li>', $html);
 			$html	 = str_replace('<span class="icon-circle"></span>', '<li><a href="#" onclick="return false" uk-icon="icon: move" class="uk-text-primary icon-circle"></a></li>', $html);
@@ -126,12 +132,12 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 			break;
 		case 'field_x':
 			$doc	 = Factory::getDocument();
-			$doc->addScript('/templates/' . $cck->template . '/fields/markup.min.js');
+			$doc->addScript('/templates/' . $cck->template . '/fields/markup.js');
 			$html	 = preg_replace('/class=\\"([^\\"]*)(adminformlist)([^\\"]*)\\"/', 'class="$1 $3"', $html); // класс adminformlist даёт доп. отступ
 			$html	 = str_replace('<div>', '<div class="uk-margin">', $html);
 			$html	 = preg_replace('/class=\\"([^\\"]*)(collection-group-wrap)([^\\"]*)\\"/', ' uk-grid class="$1 $3"', $html); // класс collection-group-wrap даёт доп. подчеркивание
 			$html	 = preg_replace('/class=\\"([^\\"]*)(collection-group-form)([^\\"]*)\\"/', 'class="$1 $2 uk-width-expand $3"', $html);
-			// FieldX buttons
+// FieldX buttons
 			$html	 = preg_replace('/(<(div)([^>]*)class="([^"]*)(collection-group-button)([^"]*)"[^>]*>)/u', '<div$3class="uk-width-auto $5 uk-iconnav uk-padding uk-padding-remove-right">', $html);
 			$html	 = preg_replace('/(<div[^>]*class="([^"]*)(button-del)([^"]*)"[^>]*><span[^>]*class="([^"]*)(icon-minus)([^"]*)"[^>]*><\/span><\/div>)/u', '<div><a href="#" onclick="return false;" uk-icon="icon: minus-circle" class="button-del-' . $field->name . ' uk-text-danger icon-minus"></a></div>', $html);
 			$html	 = preg_replace('/(<div[^>]*class="([^"]*)(button-add)([^"]*)"[^>]*><span[^>]*class="([^"]*)(icon-plus)([^"]*)"[^>]*><\/span><\/div>)/u', '<div><a href="#" onclick="return false;"  uk-icon="icon: plus-circle" class="button-add-' . $field->name . ' uk-text-success icon-plus"></a></div>', $html);
@@ -142,15 +148,15 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 			$html	 = preg_replace('/class=\\"([^\\"]*)(cck_wysiwyg_editor)([^\\"]*)\\"/', 'class="$1 uk-clearfix uk-margin1 $3"', $html);
 //			$html	 = str_replace('"></a></li></div>', '"></a></li></ul><!--test-->', $html);
 //
-			// Upload File
+// Upload File
 			$html	 = preg_replace('/(<input[^>]*type="file"[^>]*>)/u', '<div uk-grid><div uk-form-custom="target: true" class="uk-width-expand">$1<input class="uk-input uk-form-width-1-1" type="text" placeholder="Выбрать" disabled></div>', $html);
-			// Для полей ввозда и чекбокса удаления
-			$html	 = preg_replace('/<(span)(\s)+(class="hasTooltip")([^>]*>)(<input[^>]*id=\"[^"]*_delete"[^>]*>)(<\/span>)(<input[^>]*type="hidden"[^>]*>)?/', '<div$2class="hasTooltip uk-width-auto"$4<label uk-tooltip title="Check to delete existing file">$5<span uk-icon="trash"></span></label>$7</div>', $html);
-			// Для превью
+// Для полей ввода и чекбокса удаления
+			$html	 = preg_replace('/<(span)(\s)+(class="hasTooltip")([^>]*>)(<input[^>]*class=\")([^\"]*)(\"[^>]*id=\"[^"]*_delete"[^>]*>)(<\/span>)(<input[^>]*type="hidden"[^>]*>)?/', '<div$2class="hasTooltip uk-width-auto"$4<label style="cursor: pointer;" class="uk-form-label" uk-tooltip title="Check to delete existing file">$5$6 uk-checkbox uk-margin-small-right$7<span uk-icon="trash"></span></label>$9</div>', $html);
+// Для превью
 			$html	 = str_replace('cck_form_upload_image"', 'cck_form_upload_image" uk-lightbox', $html);
 			$html	 = preg_replace('/(<a[^>]*)(id=\"colorBox)([^>]*)(rel=\"colorBox)([^>]*)(title)([^>]*)>/', '$1id="$3rel="$5data-caption$7>', $html);
 			;
-			//Для скрытого поля, чтобы закрыть uk-grid
+//Для скрытого поля, чтобы закрыть uk-grid
 			$html	 = preg_replace('/<input\s+[^>]*type="hidden"[^>]*>/', '$0</div>', $html);
 //			// Inputs
 			$html	 = preg_replace('/class=\"([^\"_-]*)(text)([^\"]*)\"/', 'class="$1 uk-input $3"', $html);
@@ -209,15 +215,27 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 			break;
 
 		case 'upload_image':
-			$html	 = preg_replace('/class=\"([^\"]*)(input)([^\"]*)\"([^>])(type="checkbox")(.*)>/', 'class="$1uk-checkbox $3"$4$5$6>', $html);
-			$html	 = preg_replace('/class=\"([^\"]*)(input)([^\"]*)\"/', 'class="$1uk-input $3"', $html);
-			$html	 = str_replace(array('class="checkbox ', 'class="checkbox"'), array('class="uk-checkbox uk-margin-small-right ', 'class="uk-checkbox uk-margin-small-right"'), $html);
-			$html	 = str_replace('class="checkboxes', 'class="uk-fieldset', $html);
-			$html	 = str_replace('fieldset', 'div', $html);
-			if (stripos($field->attributes, 'data-input-label') === FALSE) {
-				$html	 = preg_replace("/(<label for=\"([^\"]*)\">)/u", "", $html);
-				$html	 = preg_replace("/(<input[^>]*id=\"([^\"]*)\"[^>]*>)/u", "<label class='uk-margin-right' for='$2'>$1", $html);
-			}
+		case 'upload_file':
+//			$html	 = preg_replace('/class=\"([^\"]*)(input)([^\"]*)\"([^>])(type="checkbox")(.*)>/', 'class="$1uk-checkbox $3"$4$5$6>', $html);
+//			$html	 = preg_replace('/class=\"([^\"]*)(input)([^\"]*)\"/', 'class="$1uk-input $3"', $html);
+
+			$html	 = preg_replace('/(<input[^>]*type="file"[^>]*>)/u', '<div uk-grid><div uk-form-custom="target: true" class="uk-width-expand">$1<input class="uk-input uk-form-width-1-1" type="text" placeholder="Выбрать" disabled></div>', $html);
+// Для полей ввода и чекбокса удаления
+			$html	 = preg_replace('/<(span)(\s)+(class="hasTooltip")([^>]*>)(<input[^>]*class=\")([^\"]*)(\"[^>]*id=\"[^"]*_delete"[^>]*>)(<\/span>)(<input[^>]*type="hidden"[^>]*>)?/', '<div$2class="hasTooltip uk-width-auto"$4<label style="cursor: pointer;" class="uk-form-label" uk-tooltip title="Check to delete existing file">$5$6 uk-checkbox uk-margin-small-right$7<span uk-icon="trash"></span></label>$9</div>', $html);
+// Для превью
+			$html	 = str_replace('cck_form_upload_image"', 'cck_form_upload_image" uk-lightbox', $html);
+			$html	 = preg_replace('/(<a[^>]*)(id=\"colorBox)([^>]*)(rel=\"colorBox)([^>]*)(title)([^>]*)>/', '$1id="$3rel="$5data-caption$7>', $html);
+			;
+//Для скрытого поля, чтобы закрыть uk-grid
+			$html	 = preg_replace('/<input\s+[^>]*type="hidden"[^>]*>/', '$0</div>', $html);
+
+//			$html	 = str_replace(array('class="checkbox ', 'class="checkbox"'), array('class="uk-checkbox uk-margin-small-right ', 'class="uk-checkbox uk-margin-small-right"'), $html);
+//			$html	 = str_replace('class="checkboxes', 'class="uk-fieldset', $html);
+//			$html	 = str_replace('fieldset', 'div', $html);
+//			if (stripos($field->attributes, 'data-input-label') === FALSE) {
+//				$html	 = preg_replace("/(<label for=\"([^\"]*)\">)/u", "", $html);
+//				$html	 = preg_replace("/(<input[^>]*id=\"([^\"]*)\"[^>]*>)/u", "<label class='uk-margin-right' for='$2'>$1", $html);
+//			}
 			break;
 		case 'currency_price':
 			$html	 = '<div uk-grid class="uk-grid-collapse"><div class="uk-width-expand">' . $html;
