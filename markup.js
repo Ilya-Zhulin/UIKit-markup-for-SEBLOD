@@ -1,7 +1,7 @@
 /**
  * Markup.js has created for helping to transfer SEBLOD 3.x template to UIKit html
  * by Ilya A.Zhulin 2021
- * Last edition 28.03.2023
+ * Last edition 10.05.2023
  */
 document.addEventListener('DOMContentLoaded', function () {
     function replaceTag(element, newTag) {

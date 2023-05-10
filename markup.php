@@ -7,7 +7,7 @@
  * @editor			Octopoos - www.octopoos.com
  * @copyright		Copyright (C) 2013 SEBLOD. All Rights Reserved.
  * @license 			GNU General Public License version 2 or later; see _LICENSE.php
- * @updated			28/03/2023
+ * @updated			10/05/2023
  * */
 defined('_JEXEC') or die;
 
@@ -107,7 +107,7 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 			$doc->addScript('/templates/' . $cck->template . '/fields/markup.min.js');
 			$html	 = preg_replace('/class=\\"([^\\"]*)(auto-expand)([^\\"]*)\\"/', 'uk-grid', $html);
 			$html	 = preg_replace('/class=\\"([^\\"]*)(cck_cgx_button)([^\\"]*)\\"/', 'class="$1 uk-float-right uk-iconnav uk-margin-bottom $3"', $html);
-			$html	 = preg_replace('/class=\\"([^\\"]*)(cck_cgx_form)([^\\"]*)\\"/', 'class="$1 uk-width-1-1 $3"', $html);
+			$html	 = preg_replace('/class=\\"([^\\"]*)(cck_cgx_form)([^\\"]*)\\"/', 'class="$1 uk-width-1-1 uk-float-left $3"', $html);
 			$html	 = preg_replace('/class=\\"([^\\"]*)(uk-form-controls)([^\\"]*)\\"/', 'class="$1 uk-margin-remove-left $3"', $html);
 			$html	 = preg_replace('/class=\\"([^\\"]*)(cck_form_group_x)([^\\"]*)\\"/', 'class="$1 uk-clearfix uk-margin $3"', $html);
 			$html	 = preg_replace('/class=\\"([^\\"]*)(cck_wysiwyg_editor)([^\\"]*)\\"/', 'class="$1 uk-clearfix uk-margin1 $3"', $html);
@@ -296,7 +296,9 @@ function cckMarkup_seb_minima($cck, $html, $field, $options) {
 				' class="uk-form-icon' . $flip . '" uk-icon="icon: ' . $icon . '"' . $tooltip . $attr . '></' . $tag .
 				'>' . $html . '</div>';
 	}
-	$html = '<div class="uk-form-controls">' . $html . '</div>';
+	if (stripos('uk-form-controls', $html) !== FALSE) {
+		$html = '<div class="uk-form-controls">' . $html . '</div>';
+	}
 
 	$html = '<div id="' . $cck->id . '_' . $field->name . '"  class="uk-margin ' . $field->name . ' ' . $field->markup_class . '">' . $label . $html . $desc . '</div>';
 
