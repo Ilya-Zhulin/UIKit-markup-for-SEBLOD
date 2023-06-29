@@ -1,7 +1,7 @@
 /**
  * Markup.js has created for helping to transfer SEBLOD 3.x template to UIKit html
  * by Ilya A.Zhulin 2021
- * Last edition 10.05.2023
+ * Last edition 29.06.2023
  */
 document.addEventListener('DOMContentLoaded', function () {
     function replaceTag(element, newTag) {
@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!(node instanceof HTMLElement))
                     continue;
                 // проверить, не является ли вставленный элемент примером кода
+//                console.log(node);
                 if (node.matches('[class*="cck_form_group_x"]') || node.matches('.ui-sortable > div')) {
                     const aside = node.querySelector('aside');
                     if (aside) {
@@ -38,12 +39,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         replaceTag(collection_wrap.querySelector('span.icon-minus'), 'a');
                         replaceTag(collection_wrap.querySelector('span.icon-plus'), 'a');
                         replaceTag(collection_wrap.querySelector('span.icon-circle'), 'a');
-                        minus = collection_wrap.querySelector('.collection-group-button').querySelector('.button-del').innerHTML;
-                        plus = collection_wrap.querySelector('.collection-group-button').querySelector('.button-add').innerHTML;
-                        drag = collection_wrap.querySelector('.collection-group-button').querySelector('.button-drag').innerHTML;
+                        let  minus = collection_wrap.querySelector('.collection-group-button').querySelector('.button-del').innerHTML, plus = collection_wrap.querySelector('.collection-group-button').querySelector('.button-add').innerHTML, drag = collection_wrap.querySelector('.collection-group-button').querySelector('.button-drag').innerHTML;
 //                        replaceTag(collection_wrap.querySelector('.collection-group-button'), 'ul');
+//                        console.log(collection_wrap.querySelector('.collection-group-button'));
                         collection_wrap.querySelector('.collection-group-button').classList.add("uk-iconnav", "uk-width-auto", "uk-padding", "uk-padding-remove-right");
-                        collection_wrap.querySelector('.collection-group-button').classList.add();
                         collection_wrap.querySelector('.collection-group-button').innerHTML = '<div>' + minus + '</div><div>' + plus + '</div><div>' + drag + '</div>';
                         // File Upload
                         if (collection_wrap.querySelector('input[type="file"]')) {
@@ -85,7 +84,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     fields.forEach(function (key, value) {
                         node.querySelectorAll(value).forEach((el) => {
                             el.classList.add(key);
-                            el.parentNode.classList.add("uk-form-controls");
+                            if (el.parentNode && el.parentNode.nodeName == 'DIV' && el.parentNode.previousElementSibling && el.parentNode.previousElementSibling.nodeName == 'LABEL') {
+                                el.parentNode.classList.add("uk-form-controls");
+                            }
                         });
                     })
                     // Labels
