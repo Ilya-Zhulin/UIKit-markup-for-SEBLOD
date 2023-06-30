@@ -1,7 +1,7 @@
 /**
  * Markup.js has created for helping to transfer SEBLOD 3.x template to UIKit html
  * by Ilya A.Zhulin 2021
- * Last edition 29.06.2023
+ * Last edition 30.06.2023
  */
 document.addEventListener('DOMContentLoaded', function () {
     function replaceTag(element, newTag) {
@@ -63,9 +63,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     node.querySelector('.icon-minus').classList.add("uk-text-danger");
                     node.querySelector('.icon-minus').setAttribute("uk-icon", "icon: minus-circle");
                     node.querySelector('.icon-minus').setAttribute("onclick", "return false;");
-                    node.querySelector('.icon-circle').classList.add("uk-text-primary");
+                    node.querySelector('.icon-circle').classList.add("uk-text-primary", "ui-sortable-handle", "button-drag");
                     node.querySelector('.icon-circle').setAttribute("uk-icon", "icon: move");
                     node.querySelector('.icon-circle').setAttribute("onclick", "return false;");
+                    node.querySelector('.icon-circle').setAttribute("style", "cursor:grab;");
                     node.classList.add("uk-clearfix");
                     node.classList.add("uk-margin");
                     let wrapform = node.querySelector('.cck_cgx.cck_cgx_form:not(.uk-width-1-1)');
