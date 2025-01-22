@@ -36,24 +36,30 @@ document.addEventListener('DOMContentLoaded', function () {
                             aside = (node.querySelector('aside')) ? node.querySelector('aside') : node.querySelector('.collection-group-button');
                     ;
                     let
-                            wrapId = (node.getAttribute("id")) ? node.getAttribute("id") : node.querySelector("[id]").getAttribute("id")
+                            prevEl = node.previousElementSibling
+                            , wrapId = (node.getAttribute("id")) ? node.getAttribute("id") : node.querySelector("[id]").getAttribute("id")
+                            , prevId = (prevEl.getAttribute("id")) ? prevEl.getAttribute("id") : prevEl.querySelector("[id]").getAttribute("id")
                             , fieldName = node.closest(".ui-sortable").parentNode.getAttribute("id").replace(/([^_]*)_(.*)/, "$2")
                             , re = new RegExp(String.raw`.*${fieldName}_+(\d*)`, "gm")
                             , currentIndex = wrapId.replace(re, "$1") * 1
-                            , prevIndex = currentIndex - 1
-                            , re1 = new RegExp(String.raw`(.*)${fieldName}(_+)${currentIndex}`, "gm")
-                            , prevId = wrapId.replace(re1, "$1" + fieldName + "$2" + prevIndex)
+                            , prevIndex = prevId.replace(re, "$1") * 1
                             , re2 = new RegExp(String.raw`\"([^"]*)${fieldName}(_+)${prevIndex}\"`, "g")
-                            , prevEl = node.previousElementSibling
                             , vals = {}
                     ;
                     node.querySelectorAll("input, textarea, select").forEach((el) => {
                         vals[el.id] = el.value;
                     });
                     node.innerHTML = prevEl.innerHTML.replace(new RegExp(String.raw`${fieldName}(_+)${prevIndex}`, "g"), fieldName + "$1" + currentIndex);
-                    node.querySelector(".cck_forms.cck_upload_image").remove();
+                    node.querySelectorAll(".cck_forms.cck_upload_image").forEach((el) => {
+                        el.remove()
+                    });
                     for (let val in vals) {
-                        node.querySelector('#' + val).value = vals[val];
+                        if (node.querySelector('#' + val)) {
+                            node.querySelector('#' + val).value = vals[val];
+                        }
+//                        else {
+//                            console.log("Нет элемента #" + val);
+//                        }
                     }
                     for (var i = 0, atts = prevEl.attributes, n = atts.length; i < n; i++) {
                         node.setAttribute(atts[i].nodeName, atts[i].value.replace(re2, "$1" + fieldName + "$2" + currentIndex).replace(fieldName + '[' + prevIndex + ']', fieldName + '[' + currentIndex + ']'));
