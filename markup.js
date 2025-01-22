@@ -53,6 +53,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     node.querySelectorAll(".cck_forms.cck_upload_image").forEach((el) => {
                         el.remove()
                     });
+                    node.querySelectorAll("input[type=file][onchange]").forEach((el) => {
+                        el.removeAttribute('onchange');
+                    });
                     for (let val in vals) {
                         if (node.querySelector('#' + val)) {
                             node.querySelector('#' + val).value = vals[val];
